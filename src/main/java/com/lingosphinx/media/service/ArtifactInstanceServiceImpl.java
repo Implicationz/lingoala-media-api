@@ -4,6 +4,7 @@ import com.lingosphinx.media.dto.ArtifactInstanceDto;
 import com.lingosphinx.media.exception.ResourceNotFoundException;
 import com.lingosphinx.media.mapper.ArtifactInstanceMapper;
 import com.lingosphinx.media.repository.ArtifactInstanceRepository;
+import com.lingosphinx.media.repository.ArtifactRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.List;
 @Slf4j
 public class ArtifactInstanceServiceImpl implements ArtifactInstanceService {
 
+    private final ArtifactRepository artifactRepository;
     private final ArtifactInstanceRepository artifactInstanceRepository;
     private final ArtifactInstanceMapper artifactInstanceMapper;
     private final AccountService accountService;
@@ -38,7 +40,10 @@ public class ArtifactInstanceServiceImpl implements ArtifactInstanceService {
         var instance = artifactInstanceRepository
                 .findByArtifactIdAndAccountId(artifactId, accountId)
                 .orElseGet(() -> {
+                    var artifact = artifactRepository.findById(artifactId)
+                            .orElseThrow(() -> new ResourceNotFoundException("Artifact not found"));
                     var newInstance = artifactInstanceMapper.toEntity(artifactInstanceDto);
+                    newInstance.setArtifact(artifact);
                     newInstance.setAccount(account);
                     return artifactInstanceRepository.save(newInstance);
                 });

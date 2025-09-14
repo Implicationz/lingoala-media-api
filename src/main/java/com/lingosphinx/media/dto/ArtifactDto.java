@@ -19,6 +19,7 @@ public class ArtifactDto {
     private ArtifactType type;
     private String title;
     private LanguageCode language;
+    private AccountDto owner;
     private String content;
     private String tokenization;
     private String transliteration;

@@ -19,6 +19,7 @@ public class ArtifactTranslation {
 
     @ManyToOne(optional = false)
     private Artifact artifact;
+    @Column(nullable = false)
     private LanguageCode language;
     private String token;
 }

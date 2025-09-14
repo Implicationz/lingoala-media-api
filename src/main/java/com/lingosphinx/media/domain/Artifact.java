@@ -20,9 +20,14 @@ public class Artifact {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(nullable = false)
     private ArtifactType type;
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private LanguageCode language;
+    @ManyToOne(optional = false)
+    private Account owner;
     private String content;
     private String tokenization;
     private String transliteration;
