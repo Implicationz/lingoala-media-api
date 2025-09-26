@@ -22,6 +22,7 @@ public class ArtifactServiceImpl implements ArtifactService {
 
     private final ArtifactRepository artifactRepository;
     private final ArtifactMapper artifactMapper;
+    private final AccountService accountService;
 
     @Override
     public ArtifactDto create(ArtifactDto artifactDto) {
@@ -30,6 +31,17 @@ public class ArtifactServiceImpl implements ArtifactService {
         log.info("Artifact created with id: {}", savedArtifact.getId());
         return artifactMapper.toDto(savedArtifact);
     }
+
+    @Override
+    public ArtifactDto createForCurrentAccount(ArtifactDto artifactDto) {
+        var artifact = artifactMapper.toEntity(artifactDto);
+        var account = accountService.registerCurrent();
+        artifact.setOwner(account);
+        var savedArtifact = artifactRepository.save(artifact);
+        log.info("Artifact created with id: {}", savedArtifact.getId());
+        return artifactMapper.toDto(savedArtifact);
+    }
+
 
     @Override
     @Transactional(readOnly = true)

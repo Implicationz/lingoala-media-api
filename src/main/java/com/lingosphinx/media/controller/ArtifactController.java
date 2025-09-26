@@ -22,7 +22,7 @@ public class ArtifactController {
 
     @PostMapping
     public ResponseEntity<ArtifactDto> create(@RequestBody @Valid ArtifactDto artifact) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(artifactService.create(artifact));
+        return ResponseEntity.status(HttpStatus.CREATED).body(artifactService.createForCurrentAccount(artifact));
     }
 
     @GetMapping("/{id}")
