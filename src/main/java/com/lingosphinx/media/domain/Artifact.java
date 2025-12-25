@@ -1,24 +1,19 @@
 package com.lingosphinx.media.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Artifact {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+@SuperBuilder
+public class Artifact extends BaseEntity {
 
     @Column(nullable = false)
     private ArtifactType type;
@@ -35,4 +30,8 @@ public class Artifact {
     @BatchSize(size = 30)
     @OneToMany(mappedBy = "artifact", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ArtifactTranslation> translations;
+
+    @BatchSize(size = 30)
+    @OneToMany(mappedBy = "artifact", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ArtifactAsset> assets;
 }

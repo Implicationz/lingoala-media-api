@@ -2,10 +2,11 @@ package com.lingosphinx.media.mapper;
 
 import com.lingosphinx.media.domain.Account;
 import com.lingosphinx.media.dto.AccountDto;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public interface AccountMapper {
 
     AccountDto toDto(Account entity);

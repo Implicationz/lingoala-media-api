@@ -1,5 +1,6 @@
 package com.lingosphinx.media.dto;
 
+import com.lingosphinx.media.domain.ArtifactAsset;
 import com.lingosphinx.media.domain.ArtifactType;
 import com.lingosphinx.media.domain.LanguageCode;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,5 @@ public class ArtifactDto {
     private String tokenization;
     private String transliteration;
     private List<ArtifactTranslationDto> translations;
+    private List<ArtifactAssetDto> assets;
 }

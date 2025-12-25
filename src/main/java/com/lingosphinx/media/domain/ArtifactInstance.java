@@ -1,24 +1,19 @@
 package com.lingosphinx.media.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(
         uniqueConstraints = @UniqueConstraint(columnNames = {"artifact_id", "account_id"})
 )
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ArtifactInstance {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+@SuperBuilder
+public class ArtifactInstance extends BaseEntity {
 
     @ManyToOne(optional = false)
     private Artifact artifact;
