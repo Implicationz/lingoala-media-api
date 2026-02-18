@@ -13,6 +13,7 @@ import lombok.*;
 @Builder
 public class ArtifactAssetDto {
 
+    private Long id;
     private ArtifactDto artifact;
     private ArtifactAssetType type;
     private String name;

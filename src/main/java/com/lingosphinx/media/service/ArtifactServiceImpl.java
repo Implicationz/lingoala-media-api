@@ -1,6 +1,8 @@
 package com.lingosphinx.media.service;
 
+import com.lingosphinx.media.domain.ArtifactAsset;
 import com.lingosphinx.media.domain.ArtifactTranslation;
+import com.lingosphinx.media.dto.ArtifactAssetDto;
 import com.lingosphinx.media.dto.ArtifactDto;
 import com.lingosphinx.media.dto.ArtifactTranslationDto;
 import com.lingosphinx.media.exception.ResourceNotFoundException;
@@ -73,6 +75,13 @@ public class ArtifactServiceImpl implements ArtifactService {
                 artifactTranslation -> artifactTranslation.setArtifact(existingArtifact),
                 artifactMapper::updateEntityFromDto
                 );
+        EntitySyncUtils.syncChildEntities(existingArtifact.getAssets(), artifactDto.getAssets(),
+                ArtifactAsset::getId,
+                ArtifactAssetDto::getId,
+                artifactMapper::toEntity,
+                artifactAsset -> artifactAsset.setArtifact(existingArtifact),
+                artifactMapper::updateEntityFromDto
+        );
         artifactRepository.flush();
         log.info("Artifact updated with id: {}", id);
         return artifactMapper.toDto(existingArtifact);
